@@ -1,20 +1,19 @@
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+
 export default function App() {
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100">
-      {/* Navbar */}
-      <nav className="flex items-center justify-between px-6 py-4 bg-slate-950 border-b border-slate-800 sticky top-0">
-        <div className="font-bold tracking-wide">💰 Finance Manager</div>
-        <div className="flex gap-6 text-slate-400 text-sm">
-          <a href="#">Home</a>
-          <a href="#">Transações</a>
-          <a href="#">Relatórios</a>
-          <a href="#">Configurações</a>
-        </div>
-      </nav>
 
+      <Navbar />
+      <Hero />
+
+
+      {/* Conteúdo */}
       <main className="max-w-6xl mx-auto px-6 py-8">
-        {/* Hero */}
-        <section className="grid md:grid-cols-2 gap-6 mb-8">
+        
+        {/* Hero Section */}
+        <section className="grid md:grid-cols-2 gap-6 mb-10">
           <div>
             <h1 className="text-3xl font-bold text-slate-50">
               Bem-vindo à sua central financeira
@@ -23,11 +22,11 @@ export default function App() {
               Acompanhe seu saldo, entradas e saídas em um único lugar.
             </p>
           </div>
-          <div className="bg-slate-950 border border-slate-800 p-6 rounded-xl">
-            <div className="text-slate-400 text-sm">Saldo atual</div>
-            <div className="text-3xl font-bold text-green-500 mt-2">
+          <div className="border border-slate-800 bg-slate-950 rounded-xl p-6">
+            <p className="text-slate-400 text-sm">Saldo atual</p>
+            <p className="text-3xl font-bold text-green-500 mt-2">
               R$ 12.540,75
-            </div>
+            </p>
             <div className="flex gap-3 mt-3">
               <span className="text-xs text-green-400 bg-green-950 border border-green-700 px-3 py-1 rounded-full">
                 +R$ 1.250 este mês
@@ -40,14 +39,14 @@ export default function App() {
         </section>
 
         {/* KPIs */}
-        <section className="grid md:grid-cols-3 gap-6 mb-8">
+        <section className="grid md:grid-cols-3 gap-6 mb-10">
           <KpiCard title="Entradas" value="R$ 8.300,00" color="text-green-400" />
           <KpiCard title="Saídas" value="R$ 4.560,25" color="text-red-400" />
           <KpiCard title="Disponível" value="R$ 3.739,75" color="text-sky-400" />
         </section>
 
-        {/* Tabela */}
-        <section className="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden">
+        {/* Transações */}
+        <section className="border border-slate-800 rounded-xl bg-slate-950 overflow-hidden">
           <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
             <h2 className="font-semibold text-lg">Últimas transações</h2>
             <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium">
@@ -71,7 +70,8 @@ export default function App() {
           </table>
         </section>
 
-        <footer className="text-center mt-10 text-slate-500 text-xs">
+        {/* Footer */}
+        <footer className="mt-10 text-center text-slate-500 text-xs">
           © {new Date().getFullYear()} Finance Manager — v0.1.0
         </footer>
       </main>
@@ -82,13 +82,20 @@ export default function App() {
 function KpiCard({ title, value, color }: { title: string; value: string; color: string }) {
   return (
     <div className="bg-slate-950 border border-slate-800 p-6 rounded-xl">
-      <div className="text-slate-400 text-sm">{title}</div>
-      <div className={`text-2xl font-bold mt-2 ${color}`}>{value}</div>
+      <p className="text-slate-400 text-sm">{title}</p>
+      <p className={`text-2xl font-bold mt-2 ${color}`}>{value}</p>
     </div>
   );
 }
 
-function TransactionRow({ date, desc, type, amount }: any) {
+type TransactionRowProps = {
+  date: string;
+  desc: string;
+  type: "INCOME" | "EXPENSE";
+  amount: string;
+};
+
+function TransactionRow({ date, desc, type, amount }: TransactionRowProps) {
   return (
     <tr className="border-t border-slate-800">
       <td className="px-6 py-3">{date}</td>
